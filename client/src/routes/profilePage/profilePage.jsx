@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import apiRequest from '../../lib/apiRequest';
 import Chat from '../../components/chat/Chat';
@@ -30,7 +30,9 @@ function ProfilePage() {
             <div className="wrapper">
                <div className="title">
                   <h1>User Information</h1>
-                  <button>Update Profile</button>
+                  <Link to="/profile/update">
+                     <button>Update Profile</button>
+                  </Link>
                </div>
                <div className="info">
                   <span>
