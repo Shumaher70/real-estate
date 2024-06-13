@@ -19,7 +19,7 @@ export const getPost = async (req, res) => {
             id,
          },
          include: {
-            postDetail: true,
+            postDetails: true,
             user: {
                select: {
                   username: true,
@@ -41,6 +41,7 @@ export const getPost = async (req, res) => {
 };
 export const addPost = async (req, res) => {
    const body = req.body;
+
    const tokenUserId = req.userId;
 
    try {
@@ -49,7 +50,7 @@ export const addPost = async (req, res) => {
             ...body.postData,
             userId: tokenUserId,
             postDetails: {
-               create: body.PostDetail,
+               create: body.postDetail,
             },
          },
       });
