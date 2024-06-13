@@ -46,19 +46,20 @@ export const addPost = async (req, res) => {
    try {
       const newPost = await prisma.post.create({
          data: {
-            ...body.postDetail,
+            ...body.postData,
             userId: tokenUserId,
-            postDetail: {
-               create: body.postDetail,
+            postDetails: {
+               create: body.PostDetail,
             },
          },
       });
       res.status(200).json(newPost);
-   } catch (error) {
-      console.log('[addPost]', error);
-      res.status(500).json({ message: 'Filed to create post' });
+   } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: 'Failed to create post' });
    }
 };
+
 export const updatePost = async (req, res) => {
    try {
       res.status(200);
