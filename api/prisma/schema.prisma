@@ -33,7 +33,7 @@ model Post {
    city      String
    bedroom   Int
    bathroom  Int
-   latitute  String
+   latitude  String
    longitude String
    type      Type
    property  Property
@@ -51,22 +51,23 @@ enum Type {
 }
 
 enum Property {
-   appartment
+   apartment
    house
    condo
    land
 }
 
 model PostDetail {
-   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-   desc      String
-   utilities String?
-   pet       String?
-   income    String?
-   size      Int?
-   school    Int?
-   bus       Int?
-   createdAt DateTime @default(now())
+   id         String   @id @default(auto()) @map("_id") @db.ObjectId
+   desc       String
+   utilities  String?
+   pet        String?
+   income     String?
+   size       Int?
+   school     Int?
+   bus        Int?
+   restaraunt Int?
+   createdAt  DateTime @default(now())
 
    postId String @unique @db.ObjectId
    post   Post   @relation(fields: [postId], references: [id])
