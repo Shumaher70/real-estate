@@ -45,7 +45,7 @@ export const getPost = async (req, res) => {
          return res.status(404).json({ message: 'The post not founded' });
       }
 
-      const token = req.cookie?.token;
+      const token = req.cookies?.token;
 
       if (token) {
          jwt.verify(token, process.env.JWT_SECRET_KEY, async (err, payload) => {
@@ -53,7 +53,7 @@ export const getPost = async (req, res) => {
                const saved = await prisma.savedPost.findUnique({
                   where: {
                      userId_postId: {
-                        userId: payload.userId,
+                        userId: payload.id,
                         postId: id,
                      },
                   },
@@ -64,8 +64,6 @@ export const getPost = async (req, res) => {
             }
          });
       }
-
-      res.status(200).json({ ...post, isSaved: false });
    } catch (error) {
       console.log('[getPost]', error);
       res.status(500).json({ message: 'Filed to get post' });
