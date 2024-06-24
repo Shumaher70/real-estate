@@ -13,18 +13,6 @@ datasource db {
    url      = env("DATABASE_URL")
 }
 
-model User {
-   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-   email     String   @unique
-   username  String   @unique
-   password  String
-   avatar    String?
-   createdAt DateTime @default(now())
-
-   posts     Post[]
-   savePosts SavedPost[]
-}
-
 model Post {
    id        String   @id @default(auto()) @map("_id") @db.ObjectId
    title     String
@@ -86,4 +74,43 @@ model SavedPost {
    createdAt DateTime @default(now())
 
    @@unique([userId, postId])
+}
+
+model User {
+   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+   email     String   @unique
+   username  String   @unique
+   password  String
+   avatar    String?
+   createdAt DateTime @default(now())
+
+   posts     Post[]
+   savePosts SavedPost[]
+
+   chatIDs String[] @db.ObjectId
+   chats   Chat[]   @relation(fields: [chatIDs], references: [id])
+}
+
+model Chat {
+   id     String   @id @default(auto()) @map("_id") @db.ObjectId
+   seenBy String[] @db.ObjectId
+
+   createdAt DateTime @default(now())
+
+   userIDs String[] @db.ObjectId
+   users   User[]   @relation(fields: [userIDs], references: [id])
+
+   messages    Message[]
+   lastMessage String?
+}
+
+model Message {
+   id     String @id @default(auto()) @map("_id") @db.ObjectId
+   text   String
+   userId String
+
+   chatId String @db.ObjectId
+   chat   Chat   @relation(fields: [chatId], references: [id])
+
+   createdAt DateTime @default(now())
 }
